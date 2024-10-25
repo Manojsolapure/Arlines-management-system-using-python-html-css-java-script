@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>User Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+        }
+        .navbar a {
+            color: white;
+            margin: 0 10px;
+        }
+        .background {
+            display: flex;
+            min-height: 100vh;
+        }
+        .content {
+            flex: 1;
+            padding: 20px;
+            background-color: white;
+        }
+        .section {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        #book-flight {
+            border: 2px solid #ccc; /* Border for Book Flight section */
+            border-radius: 8px; /* Rounded corners */
+            padding: 20px; /* Inner padding */
+            background-color: white; /* Background color */
+        }
+        .flight-box {
+            border: 1px solid #ddd; /* Border for each flight box */
+            border-radius: 8px; /* Rounded corners */
+            padding: 15px;
+            margin-top: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .message {
+            padding: 10px;
+            margin-top: 20px;
+            display: none;
+        }
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div>
+            <a href="#" onclick="showSection('book-flight')">Book Flight Ticket</a>
+            <a href="#" onclick="showSection('view-details')">View Details</a>
+            <a href="#" onclick="showSection('booking-history')">Booking History</a>
+            <a href="#" onclick="showSection('bill-payment-status')">Bill Payment Status</a>
+            <a href="#" onclick="showSection('cancel-ticket')">Cancel Ticket</a>
+        </div>
+        <div>
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+
+    <div class="background">
+        <div class="content">
+            <h1>Welcome to Your Dashboard</h1>
+
+            <!-- Book Flight Section -->
+            <div id="book-flight" class="section">
+                <h2>Available Flights</h2>
+                <div class="flight-boxes">
+                    <div class="flight-box">
+                        <h3>Duugu Airlines</h3>
+                        <p>Flight ID: 2377</p>
+                        <p>From: Banglore</p>
+                        <p>To: Bidar</p>
+                        <p>Date: 12/12/2024</p>
+                        <p>Duration: 2-hour journey</p>
+                        <p>Price: $100</p>
+                        <button onclick="bookFlight('Duugu Airlines', 2377, 'NDFOM', 'Bidar', 100)">Book Flight</button>
+                    </div>
+                    <div class="flight-box">
+                        <h3>Flight 2</h3>
+                        <p>Flight ID: 2378</p>
+                        <p>From: City A</p>
+                        <p>To: City B</p>
+                        <p>Date: 12/12/2024</p>
+                        <p>Duration: 4-hour journey</p>
+                        <p>Price: $200</p>
+                        <button onclick="bookFlight('Flight 2', 2378, 'City A', 'City B', 200)">Book Flight</button>
+                    </div>
+                    <div class="flight-box">
+                        <h3>Chat Airlines</h3>
+                        <p>Flight ID: 2379</p>
+                        <p>From: Chennai</p>
+                        <p>To: Mysore</p>
+                        <p>Date: 12/12/2024</p>
+                        <p>Duration: 7-hour journey</p>
+                        <p>Price: $200</p>
+                        <button onclick="bookFlight('Flight 2', 2378, 'City A', 'City B', 200)">Book Flight</button>
+                    </div>
+                    <div class="flight-box">
+                        <h3>Sim Airlines</h3>
+                        <p>Flight ID: 2380</p>
+                        <p>From: Dehli</p>
+                        <p>To: Goa</p>
+                        <p>Date: 12/12/2024</p>
+                        <p>Duration: 8-hour journey</p>
+                        <p>Price: $200</p>
+                        <button onclick="bookFlight('Flight 2', 2378, 'City A', 'City B', 200)">Book Flight</button>
+                    </div>
+                    <div class="flight-box">
+                        <h3>Pes Airlines</h3>
+                        <p>Flight ID: 2384</p>
+                        <p>From: Goa</p>
+                        <p>To: Bidar</p>
+                        <p>Date: 12/12/2024</p>
+                        <p>Duration: 12-hour journey</p>
+                        <p>Price: $200</p>
+                        <button onclick="bookFlight('Flight 2', 2378, 'City A', 'City B', 200)">Book Flight</button>
+                    </div>
+                    <div class="flight-box">
+                        <h3>Jai Karnataka Airlines</h3>
+                        <p>Flight ID: 2385</p>
+                        <p>From: Hubli</p>
+                        <p>To: Badmi</p>
+                        <p>Date: 12/12/2024</p>
+                        <p>Duration: 6-hour journey</p>
+                        <p>Price: $200</p>
+                        <button onclick="bookFlight('Flight 2', 2378, 'City A', 'City B', 200)">Book Flight</button>
+                    </div>
+                </div>
+
+                <!-- Booking Details Card -->
+                <div id="booking-details" class="flight-card" style="display:none;">
+                    <h2>Your Booking Details</h2>
+                    <div id="booking-info"></div>
+                    <button onclick="confirmBooking()">Confirm Booking</button>
+                </div>
+            </div>
+
+            <!-- View Details Section -->
+            <div id="view-details" class="section">
+                <h2>Your Flight Details</h2>
+                <table id="details-table">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Address</th>
+                            <th>Age</th>
+                            <th>Passport No</th>
+                            <th>Contact Number</th>
+                            <th>Flight Name</th>
+                            <th>Booking ID</th>
+                            <th>From Place</th>
+                            <th>To Place</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody id="details-body"></tbody>
+                </table>
+            </div>
+
+            <!-- Booking History Section -->
+            <div id="booking-history" class="section">
+                <h2>Booking History</h2>
+                <table id="history-table">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Address</th>
+                            <th>Age</th>
+                            <th>Passport No</th>
+                            <th>Contact Number</th>
+                            <th>Flight Name</th>
+                            <th>Booking ID</th>
+                            <th>From Place</th>
+                            <th>To Place</th>
+                            <th>Amount</th>
+                            <th>Payment Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-body"></tbody>
+                </table>
+            </div>
+
+            <!-- Bill Payment Status Section -->
+            <div id="bill-payment-status" class="section">
+                <h2>Bill Payment Status</h2>
+                <table id="payment-table">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Flight Name</th>
+                            <th>Booking ID</th>
+                            <th>Amount</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="payment-body"></tbody>
+                </table>
+            </div>
+
+            <!-- Cancel Ticket Section -->
+            <div id="cancel-ticket" class="section">
+                <h2>Cancel Ticket</h2>
+                <form onsubmit="cancelTicket(event)">
+                    <p>Enter Booking ID: <input type="text" id="cancel-booking-id" required></p>
+                    <button type="submit">Cancel Ticket</button>
+                </form>
+                <div id="cancel-message" class="message"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let bookedFlights = [];
+        let bookingIdCounter = 100000; // Start from 100000 for 6-digit booking IDs
+
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.style.display = 'none';
+            });
+            document.getElementById(sectionId).style.display = 'block';
+            if (sectionId === 'view-details') {
+                updateDetailsTable();
+            } else if (sectionId === 'booking-history') {
+                updateBookingHistoryTable();
+            } else if (sectionId === 'bill-payment-status') {
+                updatePaymentStatusTable();
+            }
+        }
+
+        function bookFlight(flightName, flightId, from, to, price) {
+            window.currentFlight = { name: flightName, id: flightId, from: from, to: to, price: price };
+            document.getElementById('booking-details').style.display = 'block';
+            document.getElementById('booking-info').innerHTML = `
+                <p>Flight Name: ${flightName}</p>
+                <p>Flight ID: ${flightId}</p>
+                <p>From: ${from}</p>
+                <p>To: ${to}</p>
+                <p>Price: $${price}</p>
+                <p>Username: <input type="text" id="username" placeholder="Enter your name" required></p>
+                <p>Address: <input type="text" id="address" placeholder="Enter your address" required></p>
+                <p>Age: <input type="number" id="age" placeholder="Enter your age" required></p>
+                <p>Passport Number: <input type="text" id="passport" placeholder="Enter passport number" required></p>
+                <p>Contact Number: <input type="text" id="contact" placeholder="Enter contact number" required></p>
+            `;
+        }
+
+        function confirmBooking() {
+            const username = document.getElementById('username').value;
+            const address = document.getElementById('address').value;
+            const age = document.getElementById('age').value;
+            const passport = document.getElementById('passport').value;
+            const contact = document.getElementById('contact').value;
+
+            const newBooking = {
+                username: username,
+                address: address,
+                age: age,
+                passport: passport,
+                contact: contact,
+                flight: window.currentFlight,
+                bookingId: bookingIdCounter++,
+                paid: false
+            };
+            bookedFlights.push(newBooking);
+            alert('Booking confirmed!');
+            document.getElementById('booking-details').style.display = 'none';
+            showSection('view-details');
+        }
+
+        function updateDetailsTable() {
+            const detailsBody = document.getElementById('details-body');
+            detailsBody.innerHTML = '';
+            bookedFlights.forEach(booking => {
+                const row = `<tr>
+                    <td>${booking.username}</td>
+                    <td>${booking.address}</td>
+                    <td>${booking.age}</td>
+                    <td>${booking.passport}</td>
+                    <td>${booking.contact}</td>
+                    <td>${booking.flight.name}</td>
+                    <td>${booking.bookingId}</td>
+                    <td>${booking.flight.from}</td>
+                    <td>${booking.flight.to}</td>
+                    <td>$${booking.flight.price}</td>
+                </tr>`;
+                detailsBody.innerHTML += row;
+            });
+        }
+
+        function updateBookingHistoryTable() {
+            const historyBody = document.getElementById('history-body');
+            historyBody.innerHTML = '';
+            bookedFlights.forEach(booking => {
+                const row = `<tr>
+                    <td>${booking.username}</td>
+                    <td>${booking.address}</td>
+                    <td>${booking.age}</td>
+                    <td>${booking.passport}</td>
+                    <td>${booking.contact}</td>
+                    <td>${booking.flight.name}</td>
+                    <td>${booking.bookingId}</td>
+                    <td>${booking.flight.from}</td>
+                    <td>${booking.flight.to}</td>
+                    <td>$${booking.flight.price}</td>
+                    <td>${booking.paid ? 'Paid' : 'Not Paid'}</td>
+                </tr>`;
+                historyBody.innerHTML += row;
+            });
+        }
+
+        function updatePaymentStatusTable() {
+            const paymentBody = document.getElementById('payment-body');
+            paymentBody.innerHTML = '';
+            bookedFlights.forEach(booking => {
+                const row = `<tr>
+                    <td>${booking.username}</td>
+                    <td>${booking.flight.name}</td>
+                    <td>${booking.bookingId}</td>
+                    <td>$${booking.flight.price}</td>
+                    <td>
+                        <button onclick="payBill(${booking.bookingId})">Pay Now</button>
+                    </td>
+                </tr>`;
+                paymentBody.innerHTML += row;
+            });
+        }
+
+        function payBill(bookingId) {
+            const booking = bookedFlights.find(b => b.bookingId === bookingId);
+            if (booking) {
+                booking.paid = true;
+                alert('Payment Successful!');
+                updatePaymentStatusTable();
+            } else {
+                alert('Booking not found!');
+            }
+        }
+
+        function cancelTicket(event) {
+            event.preventDefault();
+            const bookingId = document.getElementById('cancel-booking-id').value;
+            const index = bookedFlights.findIndex(b => b.bookingId == bookingId);
+            if (index !== -1) {
+                bookedFlights.splice(index, 1);
+                document.getElementById('cancel-message').innerHTML = '<p class="message success">Ticket canceled successfully.</p>';
+            } else {
+                document.getElementById('cancel-message').innerHTML = '<p class="message error">Booking ID not found.</p>';
+            }
+            document.getElementById('cancel-booking-id').value = '';
+        }
+
+        // Initialize the first section to show
+        showSection('book-flight');
+    </script>
+</body>
+</html>

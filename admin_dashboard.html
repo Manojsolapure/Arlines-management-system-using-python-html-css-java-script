@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+    <h2>Add Flight</h2>
+    <form method="POST" action="/add_flight">
+        <label for="flight_name">Flight Name:</label>
+        <input type="text" name="flight_name" required><br>
+        <label for="flight_id">Flight ID:</label>
+        <input type="text" name="flight_id" required><br>
+        <label for="from_place">From Place:</label>
+        <input type="text" name="from_place" required><br>
+        <label for="to_place">To Place:</label>
+        <input type="text" name="to_place" required><br>
+        <label for="date">Date (dd/mm/yyyy):</label>
+        <input type="text" name="date" required><br>
+        <label for="journey_time">Journey Time:</label>
+        <input type="text" name="journey_time" required><br>
+        <label for="amount">Amount (USD):</label>
+        <input type="number" name="amount" required><br>
+        <button type="submit">Add Flight</button>
+    </form>
+
+    <h2>Cancel Flight</h2>
+    <form method="POST" action="/cancel_flight">
+        <label for="flight_id">Flight ID:</label>
+        <input type="text" name="flight_id" required><br>
+        <button type="submit">Cancel Flight</button>
+    </form>
+
+    <h2>Current Flights</h2>
+    <table>
+        <tr>
+            <th>Flight Name</th>
+            <th>Flight ID</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Date</th>
+            <th>Journey Time</th>
+            <th>Amount</th>
+        </tr>
+        {% for flight in flights %}
+        <tr>
+            <td>{{ flight.flight_name }}</td>
+            <td>{{ flight.flight_id }}</td>
+            <td>{{ flight.from_place }}</td>
+            <td>{{ flight.to_place }}</td>
+            <td>{{ flight.date }}</td>
+            <td>{{ flight.journey_time }}</td>
+            <td>{{ flight.amount }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Bookings</h2>
+    <table>
+        <tr>
+            <th>Flight Name</th>
+            <th>Flight ID</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Date</th>
+            <th>Journey Time</th>
+            <th>Amount</th>
+        </tr>
+        {% for booking in bookings %}
+        <tr>
+            <td>{{ booking.flight_name }}</td>
+            <td>{{ booking.flight_id }}</td>
+            <td>{{ booking.from_place }}</td>
+            <td>{{ booking.to_place }}</td>
+            <td>{{ booking.date }}</td>
+            <td>{{ booking.journey_time }}</td>
+            <td>{{ booking.amount }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <a href="{{ url_for('logout') }}">Logout</a>
+</body>
+</html>
